@@ -4,7 +4,6 @@ import org.melashvili.sprtingbootecommerce.entity.Product;
 import org.melashvili.sprtingbootecommerce.entity.ProductCategory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
-import org.springframework.data.rest.core.mapping.HttpMethods;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
