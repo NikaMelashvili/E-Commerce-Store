@@ -8,6 +8,6 @@ export class Product {
     public active: boolean,
     public unitsInStock: number,
     public dateCreated: Date,
-    public dateUpdated: Date
+    public lastUpdated: Date
   ) {}
 }
