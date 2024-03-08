@@ -1,3 +1,9 @@
 export class ProductCategory {
-  constructor(categoryId: number, categoryName: string) {}
+  categoryId: number;
+  categoryName: string;
+
+  constructor(categoryId: number, categoryName: string) {
+    this.categoryId = categoryId;
+    this.categoryName = categoryName;
+  }
 }
