@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name="product_category")
-// @Data -- known bug
+// @Data -- bug
 @Getter
 @Setter
 public class ProductCategory {

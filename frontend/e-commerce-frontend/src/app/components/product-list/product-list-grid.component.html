@@ -28,6 +28,25 @@
           </div>
         </div>
       </div>
+      // mark
+      <div class="footer-pagination">
+        <div class="row">
+          <div class="col-md-6"></div>
+          <div class="col-md-6">
+            <div class="row">
+              <div style="padding-left: 30%" class="col-md-9">
+                <ngb-pagination
+                  [(page)]="currentPageNumber"
+                  [pageSize]="currentPageSize"
+                  [collectionSize]="theTotalElements"
+                  (pageChange)="listProducts()"
+                >
+                </ngb-pagination>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

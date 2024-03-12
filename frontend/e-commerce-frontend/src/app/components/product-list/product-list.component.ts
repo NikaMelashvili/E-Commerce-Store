@@ -11,7 +11,13 @@ import { ActivatedRoute } from '@angular/router';
 export class ProductListComponent implements OnInit {
   products: Product[] = [];
   currentCategoryId: number = 1;
+  previousCategoryId: number = 1;
   searchMode: boolean = false;
+
+  //Pagination stuff
+  currentPageNumber: number = 1;
+  currentPageSize: number = 10;
+  theTotalElements: number = 0;
 
   constructor(
     private productService: ProductService,
@@ -51,10 +57,29 @@ export class ProductListComponent implements OnInit {
     } else {
       this.currentCategoryId = 1;
     }
+    ////////////////////////////////////////////
+
+    if (this.previousCategoryId != this.currentCategoryId) {
+      this.currentPageNumber = 1;
+    }
+    this.previousCategoryId = this.currentCategoryId;
+    console.log(
+      `currentCategoryId=${this.currentCategoryId}, thePageNumber=${this.currentPageNumber}`
+    );
+    ////////////////////////////////////////////
+
     this.productService
-      .getProductList(this.currentCategoryId)
+      .getProductListPaginate(
+        this.currentPageNumber - 1,
+        this.currentPageSize,
+        this.currentCategoryId
+      )
       .subscribe((data) => {
-        this.products = data;
+        this.products = data._embedded.products;
+        // +1 is here bc spring data rest starts pagination at 0
+        this.currentPageNumber = data.page.number + 1;
+        this.currentPageSize = data.page.size;
+        this.theTotalElements = data.page.totalElements;
       });
   }
 }

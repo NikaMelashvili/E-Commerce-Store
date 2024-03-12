@@ -11,6 +11,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { SearchComponent } from './components/search/search.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 const routes: Routes = [
   { path: 'products/:id', component: ProductDetailsComponent },
   { path: 'search/:keyword', component: ProductListComponent },
@@ -34,6 +36,7 @@ const routes: Routes = [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    NgbModule,
   ],
   providers: [ProductService],
   bootstrap: [AppComponent],
