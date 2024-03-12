@@ -9,8 +9,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
+@Table(name="product")
 @Data
-@Table(name = "product")
 public class Product {
 
     @Id
@@ -50,5 +50,4 @@ public class Product {
     @Column(name = "last_updated")
     @UpdateTimestamp
     private Date lastUpdated;
-
 }
