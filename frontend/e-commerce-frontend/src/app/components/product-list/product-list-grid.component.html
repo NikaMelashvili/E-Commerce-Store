@@ -13,6 +13,19 @@
             <a href="#" class="primary-btn">Add to cart</a>
           </div>
         </div>
+
+        <!-- yoyo -->
+
+        <div class="d-flex justify-content-center">
+          <!-- Added classes here -->
+          <div
+            *ngIf="products?.length == 0"
+            class="alert alert-warning col-md-12 text-center"
+            role="alert"
+          >
+            <p>No products found!</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
