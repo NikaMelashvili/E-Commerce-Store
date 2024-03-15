@@ -8,44 +8,60 @@
             <a routerLink="/products/{{ tempProduct.id }}">
               <img src="{{ tempProduct.imageUrl }}" class="img-responsive" />
             </a>
+
             <a routerLink="/products/{{ tempProduct.id }}">
               <h1>{{ tempProduct.name }}</h1>
             </a>
+
             <div class="price">
               {{ tempProduct.unitPrice | currency : "USD" }}
             </div>
             <a href="#" class="primary-btn">Add to cart</a>
           </div>
         </div>
-
-        <div class="d-flex justify-content-center">
-          <div
-            *ngIf="products?.length == 0"
-            class="alert alert-warning col-md-12 text-center"
-            role="alert"
-          >
-            <p>No products found!</p>
-          </div>
+        <div
+          *ngIf="products?.length == 0"
+          class="alert alert-warning col-md-12"
+          role="alert"
+        >
+          No products found.
         </div>
       </div>
+
       <div class="footer-pagination">
         <div class="row">
           <div class="col-md-6"></div>
+
           <div class="col-md-6">
             <div class="row">
-              <div style="padding-left: 30%" class="col-md-9">
+              <div class="col-md-9" style="padding-left: 30%">
                 <ngb-pagination
-                  [(page)]="currentPageNumber"
-                  [pageSize]="currentPageSize"
+                  [(page)]="thePageNumber"
+                  [pageSize]="thePageSize"
                   [collectionSize]="theTotalElements"
                   (pageChange)="listProducts()"
                 >
                 </ngb-pagination>
               </div>
+
+              <div class="col-md-3 mt-2" style="text-align: right">
+                <span class="mr-2">Page Size</span>
+
+                <select
+                  #myPageSelect
+                  (change)="updatePageSize(myPageSelect.value)"
+                >
+                  <option selected="true">5</option>
+                  <option>10</option>
+                  <option>20</option>
+                  <option>50</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <!-- end -->
     </div>
   </div>
 </div>

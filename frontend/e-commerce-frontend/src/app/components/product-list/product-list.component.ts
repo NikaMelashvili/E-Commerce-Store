@@ -14,9 +14,9 @@ export class ProductListComponent implements OnInit {
   previousCategoryId: number = 1;
   searchMode: boolean = false;
 
-  //Pagination stuff
-  currentPageNumber: number = 1;
-  currentPageSize: number = 10;
+  // properties for pagination
+  thePageNumber: number = 1;
+  thePageSize: number = 5;
   theTotalElements: number = 0;
 
   constructor(
@@ -44,7 +44,6 @@ export class ProductListComponent implements OnInit {
     const theKeyword: string = this.route.snapshot.paramMap.get('keyword')!;
 
     this.productService.searchProducts(theKeyword).subscribe((data) => {
-      console.log(data);
       this.products = data;
     });
   }
@@ -57,29 +56,33 @@ export class ProductListComponent implements OnInit {
     } else {
       this.currentCategoryId = 1;
     }
-    ////////////////////////////////////////////
-
     if (this.previousCategoryId != this.currentCategoryId) {
-      this.currentPageNumber = 1;
+      this.thePageNumber = 1;
     }
+
     this.previousCategoryId = this.currentCategoryId;
+
     console.log(
-      `currentCategoryId=${this.currentCategoryId}, thePageNumber=${this.currentPageNumber}`
+      `currentCategoryId=${this.currentCategoryId}, thePageNumber=${this.thePageNumber}`
     );
-    ////////////////////////////////////////////
 
     this.productService
       .getProductListPaginate(
-        this.currentPageNumber - 1,
-        this.currentPageSize,
+        this.thePageNumber - 1,
+        this.thePageSize,
         this.currentCategoryId
       )
       .subscribe((data) => {
         this.products = data._embedded.products;
-        // +1 is here bc spring data rest starts pagination at 0
-        this.currentPageNumber = data.page.number + 1;
-        this.currentPageSize = data.page.size;
+        this.thePageNumber = data.page.number + 1;
+        this.thePageSize = data.page.size;
         this.theTotalElements = data.page.totalElements;
       });
+  }
+
+  updatePageSize(pageSize: string) {
+    this.thePageSize = +pageSize;
+    this.thePageNumber = 1;
+    this.listProducts();
   }
 }
