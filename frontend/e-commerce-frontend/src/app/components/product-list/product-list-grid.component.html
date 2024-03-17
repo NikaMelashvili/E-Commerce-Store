@@ -5,13 +5,14 @@
         <!-- loop over the collection of products -->
         <div *ngFor="let tempProduct of products" class="col-md-3">
           <div class="product-box">
-            <a routerLink="/products/{{ tempProduct.id }}">
-              <img src="{{ tempProduct.imageUrl }}" class="img-responsive" />
-            </a>
-
-            <a routerLink="/products/{{ tempProduct.id }}">
-              <h1>{{ tempProduct.name }}</h1>
-            </a>
+            <div class="wrapper-for-col-flex">
+              <a routerLink="/products/{{ tempProduct.id }}">
+                <img src="{{ tempProduct.imageUrl }}" class="img-responsive" />
+              </a>
+              <a routerLink="/products/{{ tempProduct.id }}">
+                <h1>{{ tempProduct.name }}</h1>
+              </a>
+            </div>
 
             <div class="price">
               {{ tempProduct.unitPrice | currency : "USD" }}
@@ -39,6 +40,8 @@
                   [(page)]="thePageNumber"
                   [pageSize]="thePageSize"
                   [collectionSize]="theTotalElements"
+                  [maxSize]="5"
+                  [boundaryLinks]="true"
                   (pageChange)="listProducts()"
                 >
                 </ngb-pagination>
@@ -51,8 +54,8 @@
                   #myPageSelect
                   (change)="updatePageSize(myPageSelect.value)"
                 >
-                  <option selected="true">5</option>
-                  <option>10</option>
+                  <option>5</option>
+                  <option selected="true">10</option>
                   <option>20</option>
                   <option>50</option>
                 </select>
