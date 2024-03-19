@@ -15,19 +15,15 @@ export class CartService {
 
   addToCart(theCartItem: CartItem) {
     let alreadyExistsInCart: boolean = false;
-    let existingCartItem: CartItem | null = null;
+    let existingCartItem: CartItem | undefined;
 
     if (this.cartItem.length > 0) {
-      for (let tempCartItem of this.cartItem) {
-        if (tempCartItem.id === theCartItem.id) {
-          // Fixed comparison operator
-          existingCartItem = tempCartItem;
-          break;
-        }
-      }
-      alreadyExistsInCart = existingCartItem !== null;
+      existingCartItem = this.cartItem.find(
+        (tempCartItem) => tempCartItem.id === theCartItem.id
+      );
+      alreadyExistsInCart = existingCartItem !== undefined;
     }
-    if (alreadyExistsInCart && existingCartItem !== null) {
+    if (alreadyExistsInCart && existingCartItem !== undefined) {
       existingCartItem.quantity++;
     } else {
       this.cartItem.push(theCartItem);
