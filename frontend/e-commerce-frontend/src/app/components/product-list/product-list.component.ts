@@ -74,8 +74,8 @@ import { CartItem } from 'src/app/common/cart-item';
                     (change)="updatePageSize(myPageSelect.value)"
                   >
                     <option>5</option>
-                    <option selected="true">10</option>
-                    <option>20</option>
+                    <option>10</option>
+                    <option selected="true">20</option>
                     <option>50</option>
                   </select>
                 </div>
@@ -97,7 +97,7 @@ export class ProductListComponent implements OnInit {
 
   // properties for pagination
   thePageNumber: number = 1;
-  thePageSize: number = 10;
+  thePageSize: number = 20;
   theTotalElements: number = 0;
 
   // keyword paginations stuff
