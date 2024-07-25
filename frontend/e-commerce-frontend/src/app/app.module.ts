@@ -14,8 +14,12 @@ import { ProductDetailsComponent } from './components/product-details/product-de
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CartStatusComponent } from './components/cart-status/cart-status.component';
+import { CartDetailsComponent } from './components/cart-details/cart-details.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 const routes: Routes = [
+  { path: 'checkout', component: CheckoutComponent },
+  { path: 'cart-details', component: CartDetailsComponent },
   { path: 'products/:id', component: ProductDetailsComponent },
   { path: 'search/:keyword', component: ProductListComponent },
   { path: 'category/:id', component: ProductListComponent },
@@ -33,6 +37,8 @@ const routes: Routes = [
     SearchComponent,
     ProductDetailsComponent,
     CartStatusComponent,
+    CartDetailsComponent,
+    CheckoutComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),
