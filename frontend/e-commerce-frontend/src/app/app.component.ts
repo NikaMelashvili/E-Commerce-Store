@@ -2,7 +2,53 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
+  // templateUrl: './app.component.html',
+  template: `<div class="page-wrapper">
+      <!-- MENU SIDEBAR-->
+      <aside class="menu-sidebar d-none d-lg-block">
+        <div class="logo">
+          <a routerLink="/products">
+            <img
+              src="../assets/images/products/logo.png"
+              alt="luv2shop"
+              class="img-responsive"
+            />
+          </a>
+        </div>
+
+        <app-product-category-menu></app-product-category-menu>
+      </aside>
+      <!-- END MENU SIDEBAR-->
+
+      <div class="page-container">
+        <!-- HEADER DESKTOP-->
+        <header class="header-desktop">
+          <div class="section-content section-content-p30">
+            <div class="container-fluid">
+              <div class="header-wrap">
+                <app-search></app-search>
+                <app-cart-status></app-cart-status>
+              </div>
+              <div class="account-wrap"></div>
+            </div>
+          </div>
+        </header>
+        <!-- END HEADER DESKTOP-->
+
+        <!-- MAIN CONTENT-->
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+
+    <!-- ENDS PAGE CONTAINER -->
+
+    <footer>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">Help</a></li>
+      </ul>
+    </footer>`,
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
