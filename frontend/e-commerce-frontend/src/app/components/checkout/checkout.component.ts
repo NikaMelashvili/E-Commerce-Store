@@ -1,3 +1,4 @@
+import { FormService } from './../../services/form.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
@@ -219,7 +220,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
               <div class="col-md-9">
                 <div class="input-space">
                   <select formControlName="cardType">
-                    <option>TO DO</option>
+                    <option *ngFor="let month of creditCardMonths">
+                      {{ month }}
+                    </option>
                   </select>
                 </div>
               </div>
@@ -231,7 +234,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
               <div class="col-md-9">
                 <div class="input-space">
                   <select formControlName="cardType">
-                    <option>TO DO</option>
+                    <option *ngFor="let year of creditCardYears">
+                      {{ year }}
+                    </option>
                   </select>
                 </div>
               </div>
@@ -259,7 +264,13 @@ export class CheckoutComponent implements OnInit {
   totalPrice: number = 0;
   totalQuantity: number = 0;
 
-  constructor(private formBuilder: FormBuilder) {}
+  creditCardYears: number[] = [];
+  creditCardMonths: number[] = [];
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private formService: FormService
+  ) {}
 
   ngOnInit(): void {
     this.checkoutFormGroup = this.formBuilder.group({
@@ -290,6 +301,19 @@ export class CheckoutComponent implements OnInit {
         expirationMonth: [''],
         expirationyear: [''],
       }),
+    });
+
+    // populating credit card months and years
+    const startMonth: number = new Date().getMonth() + 1;
+
+    this.formService.getCreditCardMonth(startMonth).subscribe((data) => {
+      console.log('Got the credit card months: ' + JSON.stringify(data));
+      this.creditCardMonths = data;
+    });
+
+    this.formService.getCreditCardYears().subscribe((data) => {
+      console.log('years for credit card: ' + JSON.stringify(data));
+      this.creditCardYears = data;
     });
   }
 
