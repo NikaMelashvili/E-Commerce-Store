@@ -8,7 +8,85 @@ import { CartItem } from 'src/app/common/cart-item';
 
 @Component({
   selector: 'app-product-list',
-  templateUrl: './product-list-grid.component.html',
+  // templateUrl: './product-list-grid.component.html',
+  template: `<div class="main-content">
+    <div class="section-content section-content-p30">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- loop over the collection of products -->
+          <div *ngFor="let tempProduct of products" class="col-md-3">
+            <div class="product-box">
+              <div class="wrapper-for-col-flex">
+                <a routerLink="/products/{{ tempProduct.id }}">
+                  <img
+                    src="{{ tempProduct.imageUrl }}"
+                    class="img-responsive"
+                  />
+                </a>
+                <a routerLink="/products/{{ tempProduct.id }}">
+                  <h1>{{ tempProduct.name }}</h1>
+                </a>
+              </div>
+
+              <div class="price">
+                {{ tempProduct.unitPrice | currency : 'USD' }}
+              </div>
+              <button
+                (click)="addToCart(tempProduct)"
+                class="btn btn-primary btn-sm"
+              >
+                Add to cart
+              </button>
+            </div>
+          </div>
+          <div
+            *ngIf="products?.length == 0"
+            class="alert alert-warning col-md-12"
+            role="alert"
+          >
+            No products found.
+          </div>
+        </div>
+
+        <div class="footer-pagination">
+          <div class="row">
+            <div class="col-md-6"></div>
+
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-9" style="padding-left: 30%">
+                  <ngb-pagination
+                    [(page)]="thePageNumber"
+                    [pageSize]="thePageSize"
+                    [collectionSize]="theTotalElements"
+                    [maxSize]="5"
+                    [boundaryLinks]="true"
+                    (pageChange)="listProducts()"
+                  >
+                  </ngb-pagination>
+                </div>
+
+                <div class="col-md-3 mt-2" style="text-align: right">
+                  <span class="mr-2">Page Size</span>
+
+                  <select
+                    #myPageSelect
+                    (change)="updatePageSize(myPageSelect.value)"
+                  >
+                    <option>5</option>
+                    <option selected="true">10</option>
+                    <option>20</option>
+                    <option>50</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end -->
+      </div>
+    </div>
+  </div> `,
   styleUrls: ['./product-list.component.css'],
 })
 export class ProductListComponent implements OnInit {

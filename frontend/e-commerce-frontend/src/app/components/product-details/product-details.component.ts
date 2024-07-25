@@ -7,7 +7,26 @@ import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-product-details',
-  templateUrl: './product-details.component.html',
+  // templateUrl: './product-details.component.html',
+  template: `<div class="detail-section">
+    <div class="container-fluid">
+      <img src="{{ product.imageUrl }}" alt="image" class="detail-image" />
+      <h3>{{ product.name }}</h3>
+      <div class="price">{{ product.unitPrice | currency : 'USD' }}</div>
+      <button
+        (click)="addToCart()"
+        class="btn btn-primary btn-sm"
+        style="text-decoration: none"
+      >
+        Add to cart
+      </button>
+      <hr />
+      <h4>Product Description</h4>
+      <p>{{ product.description }}</p>
+      <hr />
+      <a href="/products" class="mt-5">Back to all products</a>
+    </div>
+  </div> `,
   styleUrls: ['./product-details.component.css'],
 })
 export class ProductDetailsComponent implements OnInit {
