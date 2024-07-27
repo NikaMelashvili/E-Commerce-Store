@@ -1,6 +1,8 @@
+import { Country } from './../../common/country';
 import { FormService } from './../../services/form.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { State } from 'src/app/common/state';
 
 @Component({
   selector: 'app-checkout',
@@ -52,8 +54,16 @@ import { FormBuilder, FormGroup } from '@angular/forms';
               </div>
               <div class="col-md-9">
                 <div class="input-space">
-                  <select formControlName="country">
-                    <option>TO DO</option>
+                  <select
+                    formControlName="country"
+                    (change)="getState('shippingAddress')"
+                  >
+                    <option
+                      *ngFor="let country of countries"
+                      [ngValue]="country"
+                    >
+                      {{ country.name }}
+                    </option>
                   </select>
                 </div>
               </div>
@@ -85,7 +95,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
               <div class="col-md-9">
                 <div class="input-space">
                   <select formControlName="state">
-                    <option>TO DO</option>
+                    <option
+                      *ngFor="let state of shippingStates"
+                      [ngValue]="state"
+                    >
+                      {{ state.name }}
+                    </option>
                   </select>
                 </div>
               </div>
@@ -119,7 +134,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
               <div class="col-md-9">
                 <div class="input-space">
                   <select formControlName="country">
-                    <option>TO DO</option>
+                    <option
+                      *ngFor="let country of countries"
+                      [ngValue]="country"
+                    >
+                      {{ country.name }}
+                    </option>
                   </select>
                 </div>
               </div>
@@ -151,7 +171,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
               <div class="col-md-9">
                 <div class="input-space">
                   <select formControlName="state">
-                    <option>TO DO</option>
+                    <option
+                      *ngFor="let state of billingStates"
+                      [ngValue]="state"
+                    >
+                      {{ state.name }}
+                    </option>
                   </select>
                 </div>
               </div>
@@ -267,6 +292,10 @@ export class CheckoutComponent implements OnInit {
   totalPrice: number = 0;
   totalQuantity: number = 0;
 
+  countries!: Country[];
+  shippingStates!: State[];
+  billingStates!: State[];
+
   creditCardYears: number[] = [];
   creditCardMonths: number[] = [];
 
@@ -318,6 +347,12 @@ export class CheckoutComponent implements OnInit {
       console.log('years for credit card: ' + JSON.stringify(data));
       this.creditCardYears = data;
     });
+
+    // country population
+    this.formService.getCountries().subscribe((data) => {
+      console.log('countires' + data);
+      this.countries = data;
+    });
   }
 
   copyShippingToBilling(event: any) {
@@ -325,8 +360,12 @@ export class CheckoutComponent implements OnInit {
       const shippingAddress =
         this.checkoutFormGroup.get('shippingAddress')?.value;
       this.checkoutFormGroup.get('billingAddress')?.setValue(shippingAddress);
+
+      // bug fix
+      this.billingStates = this.shippingStates;
     } else {
       this.checkoutFormGroup.get('billingAddress')?.reset();
+      this.billingStates = [];
     }
   }
 
@@ -354,6 +393,26 @@ export class CheckoutComponent implements OnInit {
     this.formService.getCreditCardMonth(startMonth).subscribe((data) => {
       console.log(JSON.stringify(data));
       this.creditCardMonths = data;
+    });
+  }
+
+  getState(formGroupName: string) {
+    const formGroup = this.checkoutFormGroup.get(formGroupName);
+
+    const countryCode = formGroup?.value.country.code;
+    const countryName = formGroup?.value.country.name;
+
+    console.log(countryName);
+
+    this.formService.getStates(countryCode).subscribe((data) => {
+      if (formGroupName === 'shippingAddress') {
+        this.shippingStates = data;
+      } else {
+        this.billingStates = data;
+      }
+
+      // selecting first state as a default value
+      formGroup?.get('state')?.setValue(data[0]);
     });
   }
 }
