@@ -233,7 +233,10 @@ import { FormBuilder, FormGroup } from '@angular/forms';
               </div>
               <div class="col-md-9">
                 <div class="input-space">
-                  <select formControlName="cardType">
+                  <select
+                    formControlName="cardType"
+                    (change)="handleMonthsAndYears()"
+                  >
                     <option *ngFor="let year of creditCardYears">
                       {{ year }}
                     </option>
@@ -330,5 +333,27 @@ export class CheckoutComponent implements OnInit {
   onSubmit() {
     console.log('Data is being processed');
     console.log(this.checkoutFormGroup.get('customer')?.value);
+  }
+
+  handleMonthsAndYears() {
+    const creditCardFormGroup = this.checkoutFormGroup.get('creditCard');
+
+    const currentYear: number = new Date().getFullYear();
+    const selectYear: number = Number(
+      creditCardFormGroup?.value.expirationyear
+    );
+
+    let startMonth: number;
+
+    if (currentYear === selectYear) {
+      startMonth = new Date().getMonth() + 1;
+    } else {
+      startMonth = 1;
+    }
+
+    this.formService.getCreditCardMonth(startMonth).subscribe((data) => {
+      console.log(JSON.stringify(data));
+      this.creditCardMonths = data;
+    });
   }
 }
