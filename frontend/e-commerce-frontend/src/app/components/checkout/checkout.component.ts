@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { State } from 'src/app/common/state';
+import { FormValidator } from 'src/app/validators/form-validator';
 
 @Component({
   selector: 'app-checkout',
@@ -34,7 +35,9 @@ import { State } from 'src/app/common/state';
                     "
                     class="alert alert-danger mt-1"
                   >
-                    <div *ngIf="firstName?.errors?.['required']">
+                    <div
+                      *ngIf="firstName?.errors?.['required'] || firstName.errors.notOnlyWhiteSpace"
+                    >
                       First Name is required
                     </div>
 
@@ -60,12 +63,15 @@ import { State } from 'src/app/common/state';
                     "
                     class="alert alert-danger mt-1"
                   >
-                    <div *ngIf="lastName?.errors?.['required']">
+                    <div
+                      *ngIf="lastName?.errors?.['required'] || lastName.errors.notOnlyWhiteSpace"
+                    >
                       Last Name is required
                     </div>
 
                     <div *ngIf="lastName?.errors?.['minlength']">
-                      Last Name must be at least 2 characters long
+                      shippingCountry Last Name must be at least 2 characters
+                      long
                     </div>
                   </div>
                 </div>
@@ -83,7 +89,9 @@ import { State } from 'src/app/common/state';
                     *ngIf="email?.invalid && (email?.dirty || email?.touched)"
                     class="alert alert-danger mt-1"
                   >
-                    <div *ngIf="email?.errors?.['required']">
+                    <div
+                      *ngIf="email?.errors?.['required'] || email.errors.notOnlyWhiteSpace"
+                    >
                       Email is required
                     </div>
 
@@ -115,6 +123,18 @@ import { State } from 'src/app/common/state';
                       {{ country.name }}
                     </option>
                   </select>
+
+                  <div
+                    *ngIf="
+                      shippingCountry?.invalid &&
+                      (shippingCountry?.dirty || shippingCountry?.touched)
+                    "
+                    class="alert alert-danger mt-1"
+                  >
+                    <div *ngIf="shippingCountry?.errors?.['required']">
+                      Country is required
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -125,6 +145,25 @@ import { State } from 'src/app/common/state';
               <div class="col-md-9">
                 <div class="input-space">
                   <input formControlName="street" type="text" />
+
+                  <div
+                    *ngIf="
+                      shippingStreet?.invalid &&
+                      (shippingStreet?.dirty || shippingStreet?.touched)
+                    "
+                    class="alert alert-danger mt-1"
+                    shippingStreet
+                  >
+                    <div
+                      *ngIf="shippingStreet?.errors?.['required'] || shippingStreet.errors.notOnlyWhiteSpace"
+                    >
+                      Street is required
+                    </div>
+
+                    <div *ngIf="shippingStreet?.errors?.['minlength']">
+                      Must be at least 2 characters
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -135,6 +174,25 @@ import { State } from 'src/app/common/state';
               <div class="col-md-9">
                 <div class="input-space">
                   <input formControlName="city" type="text" />
+
+                  <div
+                    *ngIf="
+                      shippingCity?.invalid &&
+                      (shippingCity?.dirty || shippingCity?.touched)
+                    "
+                    class="alert alert-danger mt-1"
+                    shippingCity
+                  >
+                    <div
+                      *ngIf="shippingCity?.errors?.['required'] || shippingCity.errors.notOnlyWhiteSpace"
+                    >
+                      City is required
+                    </div>
+
+                    <div *ngIf="shippingCity?.errors?.['minlength']">
+                      Must be at least 2 characters
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -152,6 +210,18 @@ import { State } from 'src/app/common/state';
                       {{ state.name }}
                     </option>
                   </select>
+
+                  <div
+                    *ngIf="
+                      shippingState?.invalid &&
+                      (shippingState?.dirty || shippingState?.touched)
+                    "
+                    class="alert alert-danger mt-1"
+                  >
+                    <div *ngIf="shippingState?.errors?.['required']">
+                      State is required
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -162,6 +232,25 @@ import { State } from 'src/app/common/state';
               <div class="col-md-9">
                 <div class="input-space">
                   <input formControlName="zipCode" type="text" />
+
+                  <div
+                    *ngIf="
+                      shippingZipCode?.invalid &&
+                      (shippingZipCode?.dirty || shippingZipCode?.touched)
+                    "
+                    class="alert alert-danger mt-1"
+                    shippingZipCode
+                  >
+                    <div
+                      *ngIf="shippingZipCode?.errors?.['required'] || shippingZipCode.errors.notOnlyWhiteSpace"
+                    >
+                      Zip code is required
+                    </div>
+
+                    <div *ngIf="shippingZipCode?.errors?.['minlength']">
+                      Must be at least 2 characters
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -191,6 +280,18 @@ import { State } from 'src/app/common/state';
                       {{ country.name }}
                     </option>
                   </select>
+
+                  <div
+                    *ngIf="
+                      billingCountry?.invalid &&
+                      (billingCountry?.dirty || billingCountry?.touched)
+                    "
+                    class="alert alert-danger mt-1"
+                  >
+                    <div *ngIf="billingCountry?.errors?.['required']">
+                      Country is required
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -201,6 +302,25 @@ import { State } from 'src/app/common/state';
               <div class="col-md-9">
                 <div class="input-space">
                   <input formControlName="street" type="text" />
+
+                  <div
+                    *ngIf="
+                      billingStreet?.invalid &&
+                      (billingStreet?.dirty || billingStreet?.touched)
+                    "
+                    class="alert alert-danger mt-1"
+                    billingStreet
+                  >
+                    <div
+                      *ngIf="billingStreet?.errors?.['required'] || billingStreet.errors.notOnlyWhiteSpace"
+                    >
+                      Street is required
+                    </div>
+
+                    <div *ngIf="billingStreet?.errors?.['minlength']">
+                      Must be at least 2 characters
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -211,6 +331,25 @@ import { State } from 'src/app/common/state';
               <div class="col-md-9">
                 <div class="input-space">
                   <input formControlName="city" type="text" />
+
+                  <div
+                    *ngIf="
+                      billingCity?.invalid &&
+                      (billingCity?.dirty || billingCity?.touched)
+                    "
+                    class="alert alert-danger mt-1"
+                    billingCity
+                  >
+                    <div
+                      *ngIf="billingCity?.errors?.['required'] || billingCity.errors.notOnlyWhiteSpace"
+                    >
+                      City is required
+                    </div>
+
+                    <div *ngIf="billingCity?.errors?.['minlength']">
+                      Must be at least 2 characters
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -228,6 +367,18 @@ import { State } from 'src/app/common/state';
                       {{ state.name }}
                     </option>
                   </select>
+
+                  <div
+                    *ngIf="
+                      billingState?.invalid &&
+                      (billingState?.dirty || billingState?.touched)
+                    "
+                    class="alert alert-danger mt-1"
+                  >
+                    <div *ngIf="billingState?.errors?.['required']">
+                      State is required
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -238,6 +389,25 @@ import { State } from 'src/app/common/state';
               <div class="col-md-9">
                 <div class="input-space">
                   <input formControlName="zipCode" type="text" />
+
+                  <div
+                    *ngIf="
+                      billingZipCode?.invalid &&
+                      (billingZipCode?.dirty || billingZipCode?.touched)
+                    "
+                    class="alert alert-danger mt-1"
+                    billingZipCode
+                  >
+                    <div
+                      *ngIf="billingZipCode?.errors?.['required'] || billingZipCode.errors.notOnlyWhiteSpace"
+                    >
+                      Zip Code is required
+                    </div>
+
+                    <div *ngIf="billingZipCode?.errors?.['minlength']">
+                      Must be at least 2 characters
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -255,6 +425,18 @@ import { State } from 'src/app/common/state';
                     <option>Visa</option>
                     <option>MasterCard</option>
                   </select>
+
+                  <div
+                    *ngIf="
+                      cardType?.invalid &&
+                      (cardType?.dirty || cardType?.touched)
+                    "
+                    class="alert alert-danger mt-1"
+                  >
+                    <div *ngIf="cardType?.errors?.['required']">
+                      Credit Card type is required
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -265,6 +447,24 @@ import { State } from 'src/app/common/state';
               <div class="col-md-9">
                 <div class="input-space">
                   <input formControlName="nameOnCard" type="text" />
+
+                  <div
+                    *ngIf="
+                      nameOnCard?.invalid &&
+                      (nameOnCard?.dirty || nameOnCard?.touched)
+                    "
+                    class="alert alert-danger mt-1"
+                  >
+                    <div
+                      *ngIf="nameOnCard?.errors?.['required'] || nameOnCard.errors.notOnlyWhiteSpace"
+                    >
+                      Credit Card name is required
+                    </div>
+
+                    <div *ngIf="nameOnCard?.errors?.['minlength']">
+                      Must be at least 2 characters long
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -275,6 +475,22 @@ import { State } from 'src/app/common/state';
               <div class="col-md-9">
                 <div class="input-space">
                   <input formControlName="cardNumber" type="text" />
+
+                  <div
+                    *ngIf="
+                      cardNumber?.invalid &&
+                      (cardNumber?.dirty || cardNumber?.touched)
+                    "
+                    class="alert alert-danger mt-1"
+                  >
+                    <div *ngIf="cardNumber?.errors?.['required']">
+                      Credit Card number is required
+                    </div>
+
+                    <div *ngIf="cardNumber?.errors?.['pattern']">
+                      Credit Card number must be 16 digits long
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -285,6 +501,22 @@ import { State } from 'src/app/common/state';
               <div class="col-md-9">
                 <div class="input-space">
                   <input formControlName="securityCode" type="text" />
+
+                  <div
+                    *ngIf="
+                      securityCode?.invalid &&
+                      (securityCode?.dirty || securityCode?.touched)
+                    "
+                    class="alert alert-danger mt-1"
+                  >
+                    <div *ngIf="securityCode?.errors?.['required']">
+                      Security Code is required
+                    </div>
+
+                    <div *ngIf="securityCode?.errors?.['pattern']">
+                      Security Code must be 3 digits long
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -360,35 +592,72 @@ export class CheckoutComponent implements OnInit {
         firstName: new FormControl('', [
           Validators.required,
           Validators.minLength(2),
+          FormValidator.notOnlyWhiteSpace,
         ]),
         lastName: new FormControl('', [
           Validators.required,
           Validators.minLength(2),
+          FormValidator.notOnlyWhiteSpace,
         ]),
         email: new FormControl('', [
           Validators.required,
           Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+          FormValidator.notOnlyWhiteSpace,
         ]),
       }),
       shippingAddress: this.formBuilder.group({
-        street: [''],
-        city: [''],
-        state: [''],
-        country: [''],
-        zipCode: [''],
+        street: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+          FormValidator.notOnlyWhiteSpace,
+        ]),
+        city: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+          FormValidator.notOnlyWhiteSpace,
+        ]),
+        state: new FormControl('', [Validators.required]),
+        country: new FormControl('', [Validators.required]),
+        zipCode: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+          FormValidator.notOnlyWhiteSpace,
+        ]),
       }),
       billingAddress: this.formBuilder.group({
-        street: [''],
-        city: [''],
-        state: [''],
-        country: [''],
-        zipCode: [''],
+        street: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+          FormValidator.notOnlyWhiteSpace,
+        ]),
+        city: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+          FormValidator.notOnlyWhiteSpace,
+        ]),
+        state: new FormControl('', [Validators.required]),
+        country: new FormControl('', [Validators.required]),
+        zipCode: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+          FormValidator.notOnlyWhiteSpace,
+        ]),
       }),
       creditCard: this.formBuilder.group({
-        cardType: [''],
-        nameOnCard: [''],
-        cardNumber: [''],
-        securityCode: [''],
+        cardType: new FormControl('', [Validators.required]),
+        nameOnCard: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+          FormValidator.notOnlyWhiteSpace,
+        ]),
+        cardNumber: new FormControl('', [
+          Validators.required,
+          Validators.pattern('[0-9]{16}'),
+        ]),
+        securityCode: new FormControl('', [
+          Validators.required,
+          Validators.pattern('[0-9]{3}'),
+        ]),
         expirationMonth: [''],
         expirationyear: [''],
       }),
@@ -479,6 +748,7 @@ export class CheckoutComponent implements OnInit {
     });
   }
 
+  // customer
   get firstName() {
     return this.checkoutFormGroup.get('customer.firstName');
   }
@@ -489,5 +759,62 @@ export class CheckoutComponent implements OnInit {
 
   get email() {
     return this.checkoutFormGroup.get('customer.email');
+  }
+
+  // shipping
+  get shippingStreet() {
+    return this.checkoutFormGroup.get('shippingAddress.street');
+  }
+
+  get shippingCity() {
+    return this.checkoutFormGroup.get('shippingAddress.city');
+  }
+
+  get shippingState() {
+    return this.checkoutFormGroup.get('shippingAddress.state');
+  }
+
+  get shippingZipCode() {
+    return this.checkoutFormGroup.get('shippingAddress.zipCode');
+  }
+
+  get shippingCountry() {
+    return this.checkoutFormGroup.get('shippingAddress.country');
+  }
+  // billing
+  get billingStreet() {
+    return this.checkoutFormGroup.get('billingAddress.street');
+  }
+
+  get billingCity() {
+    return this.checkoutFormGroup.get('billingAddress.city');
+  }
+
+  get billingState() {
+    return this.checkoutFormGroup.get('billingAddress.state');
+  }
+
+  get billingZipCode() {
+    return this.checkoutFormGroup.get('billingAddress.zipCode');
+  }
+
+  get billingCountry() {
+    return this.checkoutFormGroup.get('billingAddress.country');
+  }
+  // credit card
+  get cardType() {
+    return this.checkoutFormGroup.get('creditCard.cardType');
+  }
+
+  get nameOnCard() {
+    return this.checkoutFormGroup.get('creditCard.nameOnCard');
+  }
+
+  get cardNumber() {
+    return this.checkoutFormGroup.get('creditCard.cardNumber');
+  }
+
+  get securityCode() {
+    return this.checkoutFormGroup.get('creditCard.securityCode');
   }
 }
