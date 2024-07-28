@@ -1,7 +1,12 @@
 import { Country } from './../../common/country';
 import { FormService } from './../../services/form.service';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { State } from 'src/app/common/state';
 
 @Component({
@@ -21,6 +26,22 @@ import { State } from 'src/app/common/state';
               <div class="col-md-9">
                 <div class="input-space">
                   <input formControlName="firstName" type="text" />
+
+                  <div
+                    *ngIf="
+                      firstName?.invalid &&
+                      (firstName?.dirty || firstName?.touched)
+                    "
+                    class="alert alert-danger mt-1"
+                  >
+                    <div *ngIf="firstName?.errors?.['required']">
+                      First Name is required
+                    </div>
+
+                    <div *ngIf="firstName?.errors?.['minlength']">
+                      First Name must be at least 2 characters long
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -31,6 +52,22 @@ import { State } from 'src/app/common/state';
               <div class="col-md-9">
                 <div class="input-space">
                   <input formControlName="lastName" type="text" />
+
+                  <div
+                    *ngIf="
+                      lastName?.invalid &&
+                      (lastName?.dirty || lastName?.touched)
+                    "
+                    class="alert alert-danger mt-1"
+                  >
+                    <div *ngIf="lastName?.errors?.['required']">
+                      Last Name is required
+                    </div>
+
+                    <div *ngIf="lastName?.errors?.['minlength']">
+                      Last Name must be at least 2 characters long
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -41,6 +78,19 @@ import { State } from 'src/app/common/state';
               <div class="col-md-9">
                 <div class="input-space">
                   <input formControlName="email" type="text" />
+
+                  <div
+                    *ngIf="email?.invalid && (email?.dirty || email?.touched)"
+                    class="alert alert-danger mt-1"
+                  >
+                    <div *ngIf="email?.errors?.['required']">
+                      Email is required
+                    </div>
+
+                    <div *ngIf="email?.errors?.['pattern']">
+                      Wrong Email pattern
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -307,9 +357,18 @@ export class CheckoutComponent implements OnInit {
   ngOnInit(): void {
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
-        firstName: [''],
-        lastName: [''],
-        email: [''],
+        firstName: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+        ]),
+        lastName: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+        ]),
+        email: new FormControl('', [
+          Validators.required,
+          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+        ]),
       }),
       shippingAddress: this.formBuilder.group({
         street: [''],
@@ -372,6 +431,10 @@ export class CheckoutComponent implements OnInit {
   onSubmit() {
     console.log('Data is being processed');
     console.log(this.checkoutFormGroup.get('customer')?.value);
+
+    if (this.checkoutFormGroup.invalid) {
+      this.checkoutFormGroup.markAllAsTouched();
+    }
   }
 
   handleMonthsAndYears() {
@@ -414,5 +477,17 @@ export class CheckoutComponent implements OnInit {
       // selecting first state as a default value
       formGroup?.get('state')?.setValue(data[0]);
     });
+  }
+
+  get firstName() {
+    return this.checkoutFormGroup.get('customer.firstName');
+  }
+
+  get lastName() {
+    return this.checkoutFormGroup.get('customer.lastName');
+  }
+
+  get email() {
+    return this.checkoutFormGroup.get('customer.email');
   }
 }
