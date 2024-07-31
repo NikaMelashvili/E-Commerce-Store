@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { State } from 'src/app/common/state';
+import { CartService } from 'src/app/services/cart.service';
 import { FormValidator } from 'src/app/validators/form-validator';
 
 @Component({
@@ -583,10 +584,13 @@ export class CheckoutComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private formService: FormService
+    private formService: FormService,
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
+    this.reviewCartDetails();
+
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
         firstName: new FormControl('', [
@@ -746,6 +750,17 @@ export class CheckoutComponent implements OnInit {
       // selecting first state as a default value
       formGroup?.get('state')?.setValue(data[0]);
     });
+  }
+
+  reviewCartDetails() {
+    // subscribe to cartTotal quanity
+    this.cartService.totalQuantity.subscribe(
+      (totalQuantity) => (this.totalQuantity = totalQuantity)
+    );
+    // subscribe to cartTotal price
+    this.cartService.totalPrice.subscribe(
+      (totalPrice) => (this.totalPrice = totalPrice)
+    );
   }
 
   // customer
