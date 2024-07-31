@@ -776,23 +776,35 @@ a.primary-btn:hover {
  * ----------------------------
  */
 
-footer ul li a {
-  color: #fff;
+html,
+body {
+  height: 100%;
+  margin: 0;
 }
+
 footer {
   background: #232324;
   z-index: 1;
   position: relative;
   text-align: center;
+  height: 100px;
+  align-content: center;
 }
-footer li a {
-  color: #313131;
-  font-weight: 500;
+
+footer ul {
+  margin: 0;
+  padding: 0;
 }
+
 footer ul li {
   display: inline-block;
   font-size: 14px;
   padding: 10px 20px;
+}
+
+footer ul li a {
+  color: white;
+  font-weight: 500;
 }
 
 /* 
