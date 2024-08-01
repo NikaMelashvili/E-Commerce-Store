@@ -28,6 +28,10 @@ public class OrderItem {
     @Column(name = "unit_price")
     private Double unitPrice;
 
-    
+    @Column(name = "product_id")
     private Integer productId;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
 }
