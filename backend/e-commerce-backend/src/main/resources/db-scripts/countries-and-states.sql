@@ -1,4 +1,4 @@
-USE `full-stack-ecommerce`;
+USE `full_stack_ecommerce`;
 
 SET foreign_key_checks = 0;
 

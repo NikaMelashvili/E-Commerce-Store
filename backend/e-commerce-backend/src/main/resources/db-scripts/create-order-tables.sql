@@ -2,7 +2,7 @@
 -- Schema full-stack-ecommerce
 -- -----------------------------------------------------
 
-USE `full-stack-ecommerce`;
+USE `full_stack_ecommerce`;
 
 --
 -- Prep work
