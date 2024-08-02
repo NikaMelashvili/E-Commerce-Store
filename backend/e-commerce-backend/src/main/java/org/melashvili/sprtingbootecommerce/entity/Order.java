@@ -1,5 +1,6 @@
 package org.melashvili.sprtingbootecommerce.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,9 +30,11 @@ public class Order {
     private String trackingNumber;
 
     @Column(name = "total_price")
+    @JsonProperty("price")
     private Double totalPrice;
 
     @Column(name = "total_quantity")
+    @JsonProperty("quantity")
     private Integer quantity;
 
     @OneToOne
@@ -58,9 +61,9 @@ public class Order {
     private Date dateUpdated;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
-    private Set<OrderItem> items = new HashSet<>();
+    private Set<OrderItems> items = new HashSet<>();
 
-    public void add(OrderItem item) {
+    public void add(OrderItems item) {
         if (item != null) {
             if (items == null) {
                 items = new HashSet<>();

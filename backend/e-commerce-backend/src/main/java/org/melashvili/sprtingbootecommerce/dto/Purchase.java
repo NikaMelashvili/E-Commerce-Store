@@ -5,7 +5,7 @@ import lombok.Setter;
 import org.melashvili.sprtingbootecommerce.entity.Address;
 import org.melashvili.sprtingbootecommerce.entity.Customer;
 import org.melashvili.sprtingbootecommerce.entity.Order;
-import org.melashvili.sprtingbootecommerce.entity.OrderItem;
+import org.melashvili.sprtingbootecommerce.entity.OrderItems;
 
 import java.util.Set;
 
@@ -16,6 +16,6 @@ public class Purchase {
     private Address shippingAddress;
     private Address billingAddress;
     private Order order;
-    private Set<OrderItem> orderItems;
+    private Set<OrderItems> orderItems;
 
 }
