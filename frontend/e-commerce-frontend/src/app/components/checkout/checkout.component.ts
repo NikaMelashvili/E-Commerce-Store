@@ -731,29 +731,31 @@ export class CheckoutComponent implements OnInit {
     // populate purchase - customer
     purchase.customer = this.checkoutFormGroup.controls['customer'].value;
 
-    // populate purchase - shipping address
-    purchase.shippingAddress =
+    // create a new shipping address object
+    let shippingAddress =
       this.checkoutFormGroup.controls['shippingAddress'].value;
     const shippingState: State = JSON.parse(
-      JSON.stringify(purchase.shippingAddress.state)
+      JSON.stringify(shippingAddress.state)
     );
     const shippingCountry: Country = JSON.parse(
-      JSON.stringify(purchase.shippingAddress.country)
+      JSON.stringify(shippingAddress.country)
     );
-    purchase.shippingAddress.state = shippingState.name;
-    purchase.shippingAddress.country = shippingCountry.name;
+    shippingAddress.state = shippingState.name;
+    shippingAddress.country = shippingCountry.name;
+    purchase.shippingAddress = shippingAddress;
 
-    // populate purchase - billing address
-    purchase.billingAddress =
-      this.checkoutFormGroup.controls['shippingAddress'].value;
+    // create a new billing address object
+    let billingAddress =
+      this.checkoutFormGroup.controls['billingAddress'].value;
     const billingState: State = JSON.parse(
-      JSON.stringify(purchase.billingAddress.state)
+      JSON.stringify(billingAddress.state)
     );
     const billingCountry: Country = JSON.parse(
-      JSON.stringify(purchase.billingAddress.country)
+      JSON.stringify(billingAddress.country)
     );
-    purchase.billingAddress.state = billingState.name;
-    purchase.billingAddress.country = billingCountry.name;
+    billingAddress.state = billingState.name;
+    billingAddress.country = billingCountry.name;
+    purchase.billingAddress = billingAddress;
 
     // populate purchase - order - orderItem
     purchase.order = order;
