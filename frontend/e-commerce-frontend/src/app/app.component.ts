@@ -27,6 +27,7 @@ import { Component } from '@angular/core';
             <div class="container-fluid">
               <div class="header-wrap">
                 <app-search></app-search>
+                <!-- <app-login-status></app-login-status> -->
                 <app-cart-status></app-cart-status>
               </div>
               <div class="account-wrap"></div>
